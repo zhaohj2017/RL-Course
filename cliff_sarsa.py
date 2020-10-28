@@ -18,7 +18,7 @@
 
 import gym
 from gridworld import CliffWalkingWapper, FrozenLakeWapper
-from agent import SarsaAgent
+import sarsa
 import time
 
 
