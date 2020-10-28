@@ -16,6 +16,8 @@
 
 # -*- coding: utf-8 -*-
 
+import numpy as np
+
 # agent.py 
 class SarsaAgent(object):
     def __init__(self, obs_n, act_n, learning_rate=0.01, gamma=0.9, e_greed=0.1):

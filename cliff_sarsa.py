@@ -45,6 +45,7 @@ def train_episode(env, agent, render=False):
 
         if render:
             env.render()  #渲染新的一帧图形
+                            # plot for each learning step in this episode
         if done: 
             break # reach terminal state, end the learning of this episode
 
@@ -89,15 +90,17 @@ def main():
 
     is_render = False
     for episode in range(500): # learn 500 episode
-        ep_reward, ep_steps = train_episode(env, agent, is_render)
-        print('Episode %s: steps = %s , reward = %.1f' % (episode, ep_steps, ep_reward))
-
         # 每隔20个episode渲染一下看看效果
         if episode % 20 == 0:
             is_render = True
         else:
             is_render = False
 
+        ep_reward, ep_steps = train_episode(env, agent, is_render)
+        print('Episode %s: steps = %s , reward = %.1f' % (episode, ep_steps, ep_reward))
+
+
+    print("\nPlease input Enter Key to test the learned policy: "), input()
     # 训练结束，查看算法效果
     test_episode(env, agent)
 
