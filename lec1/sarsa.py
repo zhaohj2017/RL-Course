@@ -26,7 +26,7 @@ class SarsaAgent(object):
         self.gamma = gamma      # reward的衰减率
         self.epsilon = e_greed  # 按一定概率随机选动作
         self.Q = np.zeros((obs_n, act_n)) # q-table: obs_n * act_n is the dimension, state space size times action space size
-
+                                            # initialization: all zeros!!!
     # 根据输入观察值，采样输出的动作值，带探索
     # sample an action: epsilon-greedy
     # obs is the current state
