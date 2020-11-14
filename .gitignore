@@ -131,3 +131,5 @@ dmypy.json
 *.DS_Store
 
 /lec2/runs
+
+/lec2/mnist_train
