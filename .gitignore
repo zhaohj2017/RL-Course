@@ -132,4 +132,4 @@ dmypy.json
 
 /lec2/runs
 
-/lec2/mnist_train
+/lec2/data/*
