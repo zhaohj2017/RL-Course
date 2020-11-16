@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# modified by zhaohj Oct-28-2020
+# modified by zhaohj Nov-16-2020
 
 # -*- coding: utf-8 -*-
 
 import gym
 from gridworld import CliffWalkingWapper
-#from gridworld import FrozenLakeWapper
-import sarsa
+import qlearning
 import time
 
 # episode training
@@ -33,11 +32,9 @@ def train_episode(env, agent, render=False):
 
     while True:
         next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
-        next_action = agent.sample(next_obs)  # 根据算法选择一个动作
-        # 训练 Sarsa 算法
-        agent.learn(obs, action, reward, next_obs, next_action, done)
+        # 训练 q-learning 算法
+        agent.learn(obs, action, reward, next_obs, done)
 
-        action = next_action
         obs = next_obs  # update current state and action
 
         total_reward += reward
@@ -73,15 +70,12 @@ def test_episode(env, agent):
 
 
 def main():
-    # env = gym.make("FrozenLake-v0", is_slippery=False)  # 0 left, 1 down, 2 right, 3 up
-    # env = FrozenLakeWapper(env)
-
     # setup env
     env = gym.make("CliffWalking-v0")  # 0 up, 1 right, 2 down, 3 left
     env = CliffWalkingWapper(env)
 
     # generate agent
-    agent = sarsa.SarsaAgent(
+    agent = qlearning.QLearningAgent(
         obs_n=env.observation_space.n, # the dimension of the state space of env
         act_n=env.action_space.n, # the dimension of the action space of env
         learning_rate=0.1,
