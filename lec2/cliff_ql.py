@@ -28,10 +28,12 @@ def train_episode(env, agent, render=False):
 
     obs = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
                         # obs: initial state
-    action = agent.sample(obs)  # 根据算法选择一个动作
 
     while True:
+        action = agent.sample(obs)  # 根据算法选择一个动作, epsilon-greedy
+
         next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
+        
         # 训练 q-learning 算法
         agent.learn(obs, action, reward, next_obs, done)
 
@@ -91,6 +93,7 @@ def main():
             is_render = False
 
         ep_reward, ep_steps = train_episode(env, agent, is_render)
+
         print('Episode %s: steps = %s , reward = %.1f' % (episode, ep_steps, ep_reward))
 
 

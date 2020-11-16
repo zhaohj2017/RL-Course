@@ -18,7 +18,7 @@
 
 import gym
 from gridworld import FrozenLakeWapper
-import sarsa
+import qlearning
 import time
 
 # episode training
@@ -28,15 +28,14 @@ def train_episode(env, agent, render=False):
 
     obs = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
                         # obs: initial state
-    action = agent.sample(obs)  # 根据算法选择一个动作
 
     while True:
-        next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
-        next_action = agent.sample(next_obs)  # 根据算法选择一个动作
-        # 训练 Sarsa 算法
-        agent.learn(obs, action, reward, next_obs, next_action, done)
+        action = agent.sample(obs)  # 根据算法选择一个动作
 
-        action = next_action
+        next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
+
+        agent.learn(obs, action, reward, next_obs, done)
+
         obs = next_obs  # update current state and action
 
         total_reward += reward
@@ -78,7 +77,7 @@ def main():
     env = FrozenLakeWapper(env)
 
     # generate agent
-    agent = sarsa.SarsaAgent(
+    agent = qlearning.QLearningAgent(
         obs_n=env.observation_space.n, # the dimension of the state space of env
         act_n=env.action_space.n, # the dimension of the action space of env
         learning_rate=0.1,
